@@ -1,0 +1,268 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Video Downloader App - Music</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-tint": "#ffb3ae",
+                "error": "#ffb4ab",
+                "secondary": "#c8c6c5",
+                "error-container": "#93000a",
+                "tertiary-fixed": "#e4e2e1",
+                "primary-container": "#ff5352",
+                "surface-container-highest": "#353534",
+                "on-tertiary-fixed-variant": "#474746",
+                "on-primary-container": "#5c0008",
+                "on-secondary": "#313030",
+                "on-primary-fixed-variant": "#930014",
+                "secondary-container": "#474746",
+                "outline-variant": "#5b403e",
+                "surface-container": "#201f1f",
+                "on-primary-fixed": "#410004",
+                "on-tertiary-fixed": "#1b1c1c",
+                "inverse-on-surface": "#313030",
+                "surface": "#131313",
+                "surface-container-low": "#1c1b1b",
+                "primary-fixed": "#ffdad7",
+                "surface-container-high": "#2a2a2a",
+                "on-error-container": "#ffdad6",
+                "on-surface-variant": "#e4beba",
+                "inverse-surface": "#e5e2e1",
+                "on-secondary-container": "#b7b5b4",
+                "on-error": "#690005",
+                "outline": "#ab8986",
+                "on-primary": "#68000b",
+                "primary": "#ffb3ae",
+                "inverse-primary": "#ba1724",
+                "surface-dim": "#131313",
+                "secondary-fixed": "#e5e2e1",
+                "surface-variant": "#353534",
+                "on-background": "#e5e2e1",
+                "tertiary": "#c8c6c5",
+                "tertiary-container": "#929090",
+                "on-tertiary": "#303030",
+                "on-surface": "#e5e2e1",
+                "on-tertiary-container": "#2a2a2a",
+                "secondary-fixed-dim": "#c8c6c5",
+                "on-secondary-fixed-variant": "#474746",
+                "surface-bright": "#3a3939",
+                "primary-fixed-dim": "#ffb3ae",
+                "background": "#131313",
+                "on-secondary-fixed": "#1c1b1b",
+                "tertiary-fixed-dim": "#c8c6c5",
+                "surface-container-lowest": "#0e0e0e"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter": "24px",
+                "margin-mobile": "16px",
+                "container-max": "1280px",
+                "margin-desktop": "40px",
+                "base": "8px"
+        },
+        "fontFamily": {
+                "display": [
+                        "Geist"
+                ],
+                "headline-lg": [
+                        "Geist"
+                ],
+                "body-sm": [
+                        "Hanken Grotesk"
+                ],
+                "headline-lg-mobile": [
+                        "Geist"
+                ],
+                "body-md": [
+                        "Hanken Grotesk"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ]
+        },
+        "fontSize": {
+                "display": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); font-family: theme('fontFamily.body-md'); }
+        .glass-panel { background: rgba(32, 31, 31, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid theme('colors.surface-container-highest'); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container bg-surface-container-lowest">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest text-primary dark:text-primary-fixed-dim text-headline-lg-mobile font-headline-lg-mobile font-body-md docked full-width top-0 border-b border-surface-container-highest dark:border-surface-container-highest flat no shadows z-50 sticky">
+<div class="flex justify-between items-center w-full h-16 px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<div class="text-headline-lg-mobile font-headline-lg-mobile font-bold text-primary dark:text-primary-fixed-dim tracking-tight hidden md:block">Video Downloader App
+            </div>
+<nav class="flex gap-4 md:gap-8 items-center flex-1 justify-center md:justify-start md:ml-12 h-full">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-200 h-full flex items-center px-2 text-body-md font-body-md" href="#">
+<span class="active:scale-95 duration-100 transition-transform">Video / Shorts</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-200 h-full flex items-center px-2 text-body-md font-body-md" href="#">
+<span class="active:scale-95 duration-100 transition-transform">Playlist</span>
+</a>
+<a class="text-primary dark:text-primary border-b-2 border-primary dark:border-primary font-bold h-full flex items-center px-2 text-body-md transition-colors duration-200" href="#">
+<span class="active:scale-95 duration-100 transition-transform translate-y-[1px]">Music</span>
+</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="p-2 rounded text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 active:scale-95 hidden sm:block">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-gutter py-12 flex flex-col items-center">
+<h1 class="text-display font-display text-on-surface text-center max-w-2xl mt-8">
+            only drop youtube music URLs
+        </h1>
+<!-- Tabs -->
+<div class="flex p-1 bg-surface-container rounded-lg border border-surface-container-highest mt-6 w-full max-w-sm">
+<button class="flex-1 py-2 px-4 rounded text-body-md font-body-md font-bold bg-surface-container-high text-on-surface shadow-sm transition-all text-center border border-outline-variant/30">
+                Tracks
+            </button>
+<button class="flex-1 py-2 px-4 rounded text-body-md font-body-md text-on-surface-variant hover:text-on-surface transition-colors text-center">
+                Albums
+            </button>
+</div>
+<!-- Input Area -->
+<div class="w-full max-w-3xl mt-8 flex flex-col sm:flex-row gap-0 sm:gap-1 relative group">
+<div class="relative flex-grow flex items-center bg-surface-container border border-surface-container-highest rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none focus-within:border-primary focus-within:shadow-[0_0_15px_rgba(255,179,174,0.15)] transition-all h-[56px] overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant pl-4 pr-2 z-10" data-icon="link">link</span>
+<input class="w-full h-full bg-transparent border-none text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 px-2" placeholder="Paste your YouTube Music track URL here" type="text" value="music.youtube.com/watch?v=dQw4w9WgXcQ">
+</div>
+<button class="h-[56px] px-8 bg-primary-container text-on-primary-container font-bold text-body-md font-body-md rounded-b-lg sm:rounded-r-lg sm:rounded-bl-none hover:bg-primary hover:text-on-primary transition-colors flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+                Fetch Track
+            </button>
+</div>
+<!-- Results Area -->
+<div class="w-full max-w-3xl mt-12 animate-[fadeIn_0.3s_ease-out]">
+<div class="glass-panel rounded-xl p-4 sm:p-6 flex flex-col md:flex-row gap-6 relative overflow-hidden group hover:border-outline-variant/50 transition-colors">
+<!-- Abstract bg glow -->
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Thumbnail -->
+<div class="relative w-full md:w-64 aspect-video rounded-lg overflow-hidden border border-surface-container-highest shrink-0 shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A moody, high-contrast digital abstract painting representing sound waves and rhythm in dark red and deep black tones, fitting a modern music downloader interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxN-JU5LsXMFHSFth6rws7KrzYrV1aSRN1j71s9Vld3oMubQhA_uxx_ZWJHwOuatpqzLmC_pdrnF0MfpZ9je2JhYdHhXDcd-ruxifeNNURe-nZy7McyJiMYH23utMoQFD9GurT59BUsuxWGT_ZKLKAXet33nUC4E8DHCB1HDiViZVqTtIH9TDLVLSg6OwAjAOLW2SP2nsIfOrOg13AFQI5nKtfHculRmnWgB9tHa6ec6b8HNuFOqY">
+<div class="absolute bottom-2 right-2 bg-background/90 backdrop-blur-sm px-2 py-0.5 rounded text-label-caps font-label-caps text-on-surface">
+                        3:32
+                    </div>
+</div>
+<!-- Info & Actions -->
+<div class="flex flex-col justify-between flex-grow z-10">
+<div>
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface line-clamp-2 leading-tight">
+                            Never Gonna Give You Up (Remastered)
+                        </h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="artist">artist</span>
+                            Rick Astley - Topic
+                        </p>
+<div class="flex flex-wrap gap-4 mt-4 text-body-sm font-body-sm text-on-surface-variant/70">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span> Oct 25, 2009</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 14 years ago</span>
+</div>
+</div>
+<div class="mt-6 flex flex-col sm:flex-row items-center gap-4 border-t border-surface-container-highest pt-4">
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-primary-fixed/80 mr-auto">
+<span class="material-symbols-outlined text-sm" data-icon="graphic_eq">graphic_eq</span>
+                            Best Audio Quality (320kbps MP3)
+                        </div>
+<button class="w-full sm:w-auto px-6 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold text-body-md font-body-md hover:bg-secondary hover:text-on-secondary transition-colors flex items-center justify-center gap-2 active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                            Download MP3
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest text-on-surface-variant dark:text-on-surface-variant text-label-caps font-label-caps bottom-0 border-t border-surface-container-highest dark:border-surface-container-highest mt-auto w-full">
+<div class="w-full py-4 px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4 min-h-[64px]">
+<div class="text-label-caps font-label-caps text-on-surface opacity-80 hover:opacity-100 transition-opacity md:mr-auto">
+                © 2024 Video Downloader App. Built for performance.
+            </div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">API Support</a>
+</nav>
+</div>
+</footer>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+
+</body></html>

@@ -1,0 +1,52 @@
+# =========================================================================
+# 1. Dependency Directories (Never commit these)
+# =========================================================================
+node_modules/
+/Express_Backend/node_modules/
+/Angular_FrontEnd/node_modules/
+
+# =========================================================================
+# 2. Node.js & Express (Backend specific)
+# =========================================================================
+# Local environment variables containing secrets, keys, and DB passwords
+.env
+.env.local
+.env.*.local
+
+# Logs and runtime files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================================================================
+# 3. Angular (Frontend specific)
+# =========================================================================
+# Angular build output directory
+/dist/
+/Angular_FrontEnd/dist/
+
+# Angular cache directory
+/.angular/
+/Angular_FrontEnd/.angular/
+
+# Local Angular configuration overrides
+.editable-config.json
+
+# =========================================================================
+# 4. IDE, Editor, and System Files
+# =========================================================================
+# Editor configurations (Visual Studio Code, WebStorm, etc.)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating System specific files
+DS_Store
+Thumbs.db

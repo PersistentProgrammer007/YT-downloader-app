@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" style="">
+
+<head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Video Downloader App - Playlist</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;display=swap"
+                rel="stylesheet">
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "surface-tint": "#ffb3ae",
+                                                "on-tertiary-fixed-variant": "#474746",
+                                                "on-surface-variant": "#e4beba",
+                                                "on-secondary-fixed-variant": "#474746",
+                                                "surface-dim": "#131313",
+                                                "on-tertiary": "#303030",
+                                                "error": "#ffb4ab",
+                                                "on-primary-fixed": "#410004",
+                                                "on-error": "#690005",
+                                                "inverse-surface": "#e5e2e1",
+                                                "on-secondary-container": "#b7b5b4",
+                                                "secondary": "#c8c6c5",
+                                                "on-tertiary-fixed": "#1b1c1c",
+                                                "outline": "#ab8986",
+                                                "error-container": "#93000a",
+                                                "primary": "#ffb3ae",
+                                                "surface-container-high": "#2a2a2a",
+                                                "surface-variant": "#353534",
+                                                "secondary-fixed": "#e5e2e1",
+                                                "on-secondary": "#313030",
+                                                "tertiary-fixed": "#e4e2e1",
+                                                "surface-container-highest": "#353534",
+                                                "on-tertiary-container": "#2a2a2a",
+                                                "primary-fixed-dim": "#ffb3ae",
+                                                "on-secondary-fixed": "#1c1b1b",
+                                                "surface-container": "#201f1f",
+                                                "on-error-container": "#ffdad6",
+                                                "surface": "#131313",
+                                                "secondary-fixed-dim": "#c8c6c5",
+                                                "on-background": "#e5e2e1",
+                                                "inverse-primary": "#ba1724",
+                                                "inverse-on-surface": "#313030",
+                                                "background": "#131313",
+                                                "surface-bright": "#3a3939",
+                                                "on-primary-fixed-variant": "#930014",
+                                                "on-primary": "#68000b",
+                                                "tertiary-container": "#929090",
+                                                "secondary-container": "#474746",
+                                                "tertiary": "#c8c6c5",
+                                                "surface-container-lowest": "#0e0e0e",
+                                                "primary-container": "#ff5352",
+                                                "outline-variant": "#5b403e",
+                                                "on-primary-container": "#5c0008",
+                                                "tertiary-fixed-dim": "#c8c6c5",
+                                                "primary-fixed": "#ffdad7",
+                                                "on-surface": "#e5e2e1",
+                                                "surface-container-low": "#1c1b1b"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.125rem",
+                                                "lg": "0.25rem",
+                                                "xl": "0.5rem",
+                                                "full": "0.75rem"
+                                        },
+                                        "spacing": {
+                                                "base": "8px",
+                                                "margin-desktop": "40px",
+                                                "container-max": "1280px",
+                                                "margin-mobile": "16px",
+                                                "gutter": "24px"
+                                        },
+                                        "fontFamily": {
+                                                "display": [
+                                                        "Geist"
+                                                ],
+                                                "headline-lg": [
+                                                        "Geist"
+                                                ],
+                                                "label-caps": [
+                                                        "JetBrains Mono"
+                                                ],
+                                                "body-md": [
+                                                        "Hanken Grotesk"
+                                                ],
+                                                "headline-lg-mobile": [
+                                                        "Geist"
+                                                ],
+                                                "body-sm": [
+                                                        "Hanken Grotesk"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "display": [
+                                                        "48px",
+                                                        {
+                                                                "lineHeight": "56px",
+                                                                "letterSpacing": "-0.02em",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "headline-lg": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "40px",
+                                                                "letterSpacing": "-0.01em",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "label-caps": [
+                                                        "12px",
+                                                        {
+                                                                "lineHeight": "16px",
+                                                                "letterSpacing": "0.05em",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-lg-mobile": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "32px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "body-sm": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+        <style>
+                body {
+                        background-color: #131313;
+                        color: #e5e2e1;
+                }
+
+                .tonal-surface-1 {
+                        background-color: #1c1b1b;
+                        border: 1px solid #353534;
+                }
+
+                .tonal-surface-2 {
+                        background-color: #201f1f;
+                        border: 1px solid #3a3939;
+                }
+
+                .custom-scrollbar::-webkit-scrollbar {
+                        width: 6px;
+                }
+
+                .custom-scrollbar::-webkit-scrollbar-track {
+                        background: #131313;
+                }
+
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                        background: #353534;
+                        border-radius: 10px;
+                }
+
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                        background: #474746;
+                }
+        </style>
+</head>
+
+<body class="font-body-md text-body-md min-h-screen flex flex-col">
+        <!-- TopAppBar -->
+        <header class="bg-background sticky top-0 z-50 border-b border-outline-variant">
+                <div
+                        class="flex justify-between items-center w-full h-16 px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+                        <div class="text-headline-lg-mobile font-headline-lg-mobile text-primary tracking-tight">
+                                Video Downloader App
+                        </div>
+                        <nav class="hidden md:flex items-center gap-8"><a
+                                        class="hover:text-on-surface hover:bg-surface-container-low transition-colors duration-200 py-1 text-primary border-b-2 border-primary font-label-caps text-label-caps"
+                                        href="#">Youtube</a><a
+                                        class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-200 py-1 font-label-caps text-label-caps"
+                                        href="#">Music</a></nav>
+                        <div class="flex items-center gap-4">
+                                <button
+                                        class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">dark_mode</button>
+                                <button
+                                        class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">help</button>
+                        </div>
+                </div>
+        </header>
+        
+        <main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-gutter py-12">
+                <!-- Hero & Controls Section -->
+                <div class="text-center mb-12">
+                        <h1 class="text-display font-display mb-4 text-on-surface">Playlist Downloader</h1>
+                        <p class="text-on-surface-variant font-body-md max-w-2xl mx-auto mb-10">
+                                Paste your YouTube playlist URL below. We'll fetch every video so you can choose your
+                                preferred quality and download them all at once or individually.
+                        </p>
+                        <!-- Segmented Toggle -->
+                        <div class="inline-flex p-1 bg-surface-container-lowest rounded-xl border border-outline mb-10">
+                                <button
+                                        class="px-6 py-2 rounded-lg text-label-caps font-label-caps text-on-surface-variant hover:text-on-surface transition-all">Video
+                                        / Shorts</button>
+                                <button
+                                        class="px-6 py-2 rounded-lg text-label-caps font-label-caps bg-primary text-on-primary shadow-lg transition-all">Playlist</button>
+                        </div>
+                        <!-- URL Input Area -->
+                        <div class="max-w-3xl mx-auto flex flex-col md:flex-row gap-2">
+                                <div class="relative flex-grow group">
+                                        <span
+                                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
+                                        <input class="w-full h-14 pl-12 pr-4 bg-surface-container border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-on-surface-variant/50 text-on-surface font-body-md"
+                                                placeholder="Paste your own or other creator's playlist URL here."
+                                                type="text">
+                                </div>
+                                <button
+                                        class="h-14 px-10 bg-primary-container hover:bg-opacity-90 text-on-primary-container font-headline-lg-mobile rounded-lg transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2">
+                                        Fetch Playlist
+                                        <span class="material-symbols-outlined">search</span>
+                                </button>
+                        </div>
+                </div>
+                <!-- Playlist Results Header -->
+                <div class="flex items-center justify-between mb-6 border-b border-outline pb-4">
+                        <div class="flex items-center gap-4">
+                                <h2 class="text-headline-lg font-headline-lg text-on-surface">Playlist Content</h2>
+                                <span
+                                        class="bg-surface-container-high px-3 py-1 rounded-full text-label-caps font-label-caps text-secondary">24
+                                        Videos</span>
+                        </div>
+                        <button
+                                class="h-14 px-10 bg-primary-container hover:bg-opacity-90 text-on-primary-container font-headline-lg-mobile rounded-lg transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2">Download
+                                All
+                                <span class="material-symbols-outlined">download</span></button>
+                </div>
+                <!-- Scrollable List of Video Cards -->
+                <div class="space-y-4">
+                        <!-- Playlist Item 1 -->
+                        <div
+                                class="tonal-surface-1 rounded-xl p-4 flex flex-col md:flex-row gap-6 items-center group hover:bg-surface-container transition-colors">
+                                <div
+                                        class="relative flex-shrink-0 w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-container-highest">
+                                        <img class="w-full h-full object-cover"
+                                                data-alt="A cinematic high-quality thumbnail showing a futuristic cityscape at sunset with neon reflections on wet asphalt. The overall aesthetic is dark mode professional with vibrant blue and pink highlights, echoing a premium media tool interface. Soft bokeh lighting in the background creates depth."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDzxciMg0LuW-_ACQ50wvr3FIGas1UFX9UH7VHy-RlT98FmJ09g99Vl89ebS_PoNOtG6CXYqLCPt_TNUmgkQ8fgbJk7o35gwi-dqfnqhFiCX8pGeatgXX80YkIDh31rYsWu2kOjPDFwO3FK_BAH1oQpbeq4-QVJJ0aXU0m8ppWjbAa4kC8NIkORdBkOMy7CCQnpQQx2BHCU_Fxapgtkbvo_5-C666bHCPWlRx4teQ8w9NRTwGZPeI">
+                                        <div
+                                                class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-label-caps font-label-caps text-white">
+                                                12:45</div>
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                        <h3 class="text-body-md font-bold text-on-surface truncate mb-1">Modern UI
+                                                Design Trends 2024 - Full Masterclass</h3>
+                                        <div
+                                                class="flex items-center gap-3 text-label-caps font-label-caps text-on-surface-variant">
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">person</span>
+                                                        Design Academy</span>
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                                        2 days ago</span>
+                                        </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                                        <div class="relative w-full sm:w-48">
+                                                <select
+                                                        class="w-full bg-surface-container-high border border-outline rounded-lg py-2 px-3 text-body-sm text-on-surface appearance-none focus:ring-1 focus:ring-primary outline-none">
+                                                        <option>1080p (.mp4) - 245 MB</option>
+                                                        <option>720p (.mp4) - 112 MB</option>
+                                                        <option>480p (.mp4) - 64 MB</option>
+                                                        <option>MP3 Audio - 12 MB</option>
+                                                </select>
+                                                <span
+                                                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+                                        </div>
+                                        <button
+                                                class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-surface-container-highest border border-outline rounded-lg text-on-surface hover:bg-primary hover:text-on-primary transition-all font-label-caps">
+                                                <span class="material-symbols-outlined text-[20px]">download</span>
+                                                Download
+                                        </button>
+                                </div>
+                        </div>
+                        <!-- Playlist Item 2 -->
+                        <div
+                                class="tonal-surface-1 rounded-xl p-4 flex flex-col md:flex-row gap-6 items-center group hover:bg-surface-container transition-colors">
+                                <div
+                                        class="relative flex-shrink-0 w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-container-highest">
+                                        <img class="w-full h-full object-cover"
+                                                data-alt="Close-up of high-tech studio equipment with soft red ambient lighting in a dark room. Professional condenser microphone and studio monitors are visible in the background with a shallow depth of field. The style is sleek, dark, and professional, focused on high-end audio-visual production."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxF9XEjeOTsNG10QRmjOAUby2CXelrVsYGLUnl2b-KUiqc3QZmjPQhSqiXqWWhlXan-TKmZasgDIK3QKbiw2JQKn9tmgKIqG3kr7XfV5IFG1xNSTZPB_eM_rPlRmV23Ms9kdJz4K7Glwo5GpKeIWqZLskXuewfq60cSRhxx0koBFW-33cHR-aC_2Bc1q3_6NafKsWz5zPvTzjSDNklcpr7QeawI28OGSJjWMfHIRUUSp9PpHD4Asw">
+                                        <div
+                                                class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-label-caps font-label-caps text-white">
+                                                08:20</div>
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                        <h3 class="text-body-md font-bold text-on-surface truncate mb-1">Tailwind CSS
+                                                Advanced Animation Techniques</h3>
+                                        <div
+                                                class="flex items-center gap-3 text-label-caps font-label-caps text-on-surface-variant">
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">person</span>
+                                                        Frontend Daily</span>
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                                        1 week ago</span>
+                                        </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                                        <div class="relative w-full sm:w-48">
+                                                <select
+                                                        class="w-full bg-surface-container-high border border-outline rounded-lg py-2 px-3 text-body-sm text-on-surface appearance-none focus:ring-1 focus:ring-primary outline-none">
+                                                        <option>4K (.mp4) - 1.2 GB</option>
+                                                        <option selected="">1080p (.mp4) - 180 MB</option>
+                                                        <option>720p (.mp4) - 95 MB</option>
+                                                </select>
+                                                <span
+                                                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+                                        </div>
+                                        <button
+                                                class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-surface-container-highest border border-outline rounded-lg text-on-surface hover:bg-primary hover:text-on-primary transition-all font-label-caps">
+                                                <span class="material-symbols-outlined text-[20px]">download</span>
+                                                Download
+                                        </button>
+                                </div>
+                        </div>
+                        <!-- Playlist Item 3 (Downloading State Demo) -->
+                        <div
+                                class="tonal-surface-1 rounded-xl p-4 flex flex-col md:flex-row gap-6 items-center group relative overflow-hidden border-primary/30">
+                                <div class="absolute bottom-0 left-0 h-1 bg-primary w-[45%] z-10"></div>
+                                <div
+                                        class="relative flex-shrink-0 w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-container-highest">
+                                        <img class="w-full h-full object-cover"
+                                                data-alt="An abstract digital representation of data streams and binary code flowing through a dark void. Glowing red and orange light trails create a sense of high-speed movement and connectivity. The atmosphere is technical and sophisticated, utilizing deep blacks and brilliant accent colors for a premium utility feel."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEtZZ6jcrNxRkiPUTrsnItysBdCaf_Jp9BKGiNaZWs4345-5TOE1ZFRKQoAwT6yOzBRWx0rx2wG2P55xriFHpyhreWN9JEQlrntmv09SdIwvBvgkHANQz6bY-feojjxbNpCpbs2ObEqjRSmoji1tkcrkZFVDdDdaxp0iIdx4X1KQb6swllntT__RW6F0zHjq3bE94FkRtg_JZ15Ij64GDma0Wseii3BfjbEuWAXEMlk07JwvPohtQ">
+                                        <div
+                                                class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-label-caps font-label-caps text-white">
+                                                22:15</div>
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                        <h3 class="text-body-md font-bold text-on-surface truncate mb-1">Data
+                                                Visualization with D3.js and React</h3>
+                                        <div
+                                                class="flex items-center gap-3 text-label-caps font-label-caps text-on-surface-variant">
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">person</span>
+                                                        Code Mastery</span>
+                                                <span class="text-primary">Downloading (45%)</span>
+                                        </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                                        <div class="w-full sm:w-48 text-right pr-4 hidden sm:block">
+                                                <span class="text-label-caps font-label-caps text-on-surface-variant">12.5
+                                                        MB/s</span>
+                                        </div>
+                                        <button
+                                                class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-error-container text-on-error-container rounded-lg transition-all hover:brightness-110 font-label-caps">
+                                                <span class="material-symbols-outlined text-[20px]">close</span>
+                                                Cancel
+                                        </button>
+                                </div>
+                        </div>
+                        <!-- Playlist Item 4 -->
+                        <div
+                                class="tonal-surface-1 rounded-xl p-4 flex flex-col md:flex-row gap-6 items-center group hover:bg-surface-container transition-colors">
+                                <div
+                                        class="relative flex-shrink-0 w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-container-highest">
+                                        <img class="w-full h-full object-cover"
+                                                data-alt="A top-down view of a modern workspace with a laptop, a notebook, and a coffee cup on a dark charcoal desk. Soft, warm lighting from the side highlights the textures of the materials. The design is minimalist and clean, representing productivity and high-performance digital tools."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWDpUfP1ukPm732gF3vjGBtZ-mMwQQV1x2PEiZ_wyBqTl0QG_PQME4PVBHxUSIyFGawp8xqAUJTt_XjMNMhfqP9O3KWTpXY9sk2t2D8B87r-5lLTYgrT_76iylONcjOAmwfAruAZMSzXCLDc955SUCLGWRH_8YKuK16EpE2PJG_K3fgrnxv-ov2T9pRQI0mEVIyGkU0p2gumcq_8cyjDQDxl7P7Cadq0zY10GlvmXVAPAo8rR-KEg">
+                                        <div
+                                                class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-label-caps font-label-caps text-white">
+                                                05:50</div>
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                        <h3 class="text-body-md font-bold text-on-surface truncate mb-1">Productivity
+                                                Workflow for Remote Developers</h3>
+                                        <div
+                                                class="flex items-center gap-3 text-label-caps font-label-caps text-on-surface-variant">
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">person</span>
+                                                        DevTalks</span>
+                                                <span class="flex items-center gap-1"><span
+                                                                class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                                        1 month ago</span>
+                                        </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                                        <div class="relative w-full sm:w-48">
+                                                <select
+                                                        class="w-full bg-surface-container-high border border-outline rounded-lg py-2 px-3 text-body-sm text-on-surface appearance-none focus:ring-1 focus:ring-primary outline-none">
+                                                        <option>1080p (.mp4) - 78 MB</option>
+                                                        <option>720p (.mp4) - 42 MB</option>
+                                                </select>
+                                                <span
+                                                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+                                        </div>
+                                        <button
+                                                class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-surface-container-highest border border-outline rounded-lg text-on-surface hover:bg-primary hover:text-on-primary transition-all font-label-caps">
+                                                <span class="material-symbols-outlined text-[20px]">download</span>
+                                                Download
+                                        </button>
+                                </div>
+                        </div>
+                </div>
+                <!-- Load More -->
+                <div class="mt-10 text-center">
+                        <button
+                                class="px-8 py-3 bg-surface-container-low border border-outline text-on-surface rounded-full hover:bg-surface-container-high transition-colors font-label-caps">
+                                Load more videos
+                        </button>
+                </div>
+        </main>
+        <!-- Footer -->
+        <footer class="bg-surface-container-lowest border-t border-outline-variant mt-auto">
+                <div
+                        class="w-full py-base px-margin-mobile md:px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="text-label-caps font-label-caps text-on-surface w-full md:w-1/3 text-left">Video
+                                Downloader App</div>
+                        <div class="flex gap-8 w-full md:w-1/3 justify-center">
+                                <a class="text-on-surface-variant text-label-caps font-label-caps hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                                        href="#">Privacy Policy</a>
+                                <a class="text-on-surface-variant text-label-caps font-label-caps hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                                        href="#">Terms of Service</a>
+                                <a class="text-on-surface-variant text-label-caps font-label-caps hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                                        href="#">API Support</a>
+                        </div>
+                        <div class="text-label-caps font-label-caps text-on-surface-variant w-full md:w-1/3 text-right">
+                                © 2024 Video Downloader App. Built for performance.
+                        </div>
+                </div>
+        </footer>
+        <script>
+                // Simple micro-interactions for active state logic simulation
+                document.querySelectorAll('select').forEach(select => {
+                        select.addEventListener('change', function () {
+                                const parentCard = this.closest('.tonal-surface-1');
+                                parentCard.classList.add('border-primary/50');
+                                setTimeout(() => parentCard.classList.remove('border-primary/50'), 1000);
+                        });
+                });
+
+                // Simulating a fetch action
+                const fetchBtn = document.querySelector('button:contains("Fetch")');
+                if (fetchBtn) {
+                        fetchBtn.addEventListener('click', () => {
+                                fetchBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Fetching...`;
+                                setTimeout(() => {
+                                        fetchBtn.innerHTML = `<span class="material-symbols-outlined">download</span> Fetch Playlist`;
+                                }, 2000);
+                        });
+                }
+        </script>
+
+
+</body>
+
+</html>

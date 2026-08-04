@@ -1,0 +1,69 @@
+<!-- <p>trial-tab works!</p> -->
+
+    <div class="inline-flex p-1 bg-surface-container-lowest rounded-xl border border-outline mb-10">
+        @for (tab of tabs(); track tab.id; let i = $index) {
+            <button class = {{tab.cls}}
+                (click)="activeTab.set(i)"
+                [class.active] = "activeTab() === i">
+                {{ tab.title }}    
+            </button>
+        }
+        
+    </div>
+
+    <div>
+        <!-- tab content -->
+         @switch (activeTab()) {
+            @case (0) {
+                <p> Welcome to the dashboard hi!</p>
+            }
+            @case (1) {
+                <p> how are you mate?</p>
+            }
+         }
+    </div>
+
+
+<!-- Tab Headers Navigation -->
+<!-- <div class="tab-headers">
+  <button 
+    *ngFor="let tab of tabs(); let i = index" 
+    [class.active]="activeTab() === i"
+    (click)="selectTab(i)">
+    {{ tab }}
+  </button>
+</div> -->
+
+<!-- Tab Content Container -->
+<!-- <div class="tab-content">
+  <ng-container [ngSwitch]="activeTab()">
+    <app-overview *ngSwitchCase="0"></app-overview>
+    <app-analytics *ngSwitchCase="1"></app-analytics>
+    <app-settings *ngSwitchCase="2"></app-settings>
+  </ng-container>
+</div> -->
+
+<!-- 
+prompt: 
+
+<div class="tab-headers">
+  <button 
+    *ngFor="let tab of tabs(); let i = index" 
+    [class.active]="activeTab() === i"
+    (click)="selectTab(i)">
+    {{ tab }}
+  </button>
+</div>
+
+<div class="tab-content">
+  <ng-container [ngSwitch]="activeTab()">
+    <app-overview *ngSwitchCase="0"></app-overview>
+    <app-analytics *ngSwitchCase="1"></app-analytics>
+    <app-settings *ngSwitchCase="2"></app-settings>
+  </ng-container>
+</div>
+
+
+this angular code deprecated! use @for and @switch instead 
+
+-->
