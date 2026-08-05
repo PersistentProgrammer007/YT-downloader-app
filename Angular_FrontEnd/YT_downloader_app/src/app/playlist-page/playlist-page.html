@@ -1,1 +1,47 @@
-<p>playlist-page works!</p>
+ 
+ <main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-gutter py-12">
+ <div class="text-center mb-12">
+                        <h1 class="text-display font-display mb-4 text-on-surface">Playlist Downloader</h1>
+                        <p class="text-on-surface-variant font-body-md max-w-2xl mx-auto mb-10">
+                                Paste your YouTube playlist URL below. We'll fetch every video so you can choose your
+                                preferred quality and download them all at once or individually.
+                        </p>
+                        <!-- Segmented Toggle -->
+                        <div class="mb-8 flex justify-center">
+                        <app-tabs></app-tabs>
+                        </div>
+                        <!-- URL Input Area -->
+
+                        <div class="max-w-3xl mx-auto">
+      <app-fetch [fetchText]="fetchText()" [placeholderText]="phText()"></app-fetch>
+    </div>
+
+                </div>
+                <!-- Playlist Results Header -->
+                <div class="flex items-center justify-between mb-6 border-b border-outline pb-4">
+                        <div class="flex items-center gap-4">
+                                <h2 class="text-headline-lg font-headline-lg text-on-surface">Playlist Content</h2>
+                                <span
+                                        class="bg-surface-container-high px-3 py-1 rounded-full text-label-caps font-label-caps text-secondary">24
+                                        Videos</span>
+                        </div>
+                        <button
+                                class="h-14 px-10 bg-primary-container hover:bg-opacity-90 text-on-primary-container font-headline-lg-mobile rounded-lg transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2">Download
+                                All
+                                <span class="material-symbols-outlined">download</span></button>
+                </div>
+                <!-- Scrollable List of Video Cards -->
+                <div class="space-y-4">
+                       @for (item of videometadata(); track item.id; let i = $index){
+                            <app-list-item [title]="item.title" [uploaderName] = "item.uploaderName" [duration] = "item.duration" [video_age] = "[item.video_age]"/>
+
+                       }
+                </div>
+                <!-- Load More -->
+                <div class="mt-10 text-center">
+                        <button
+                                class="px-8 py-3 bg-surface-container-low border border-outline text-on-surface rounded-full hover:bg-surface-container-high transition-colors font-label-caps">
+                                Load more videos
+                        </button>
+                </div>
+</main>

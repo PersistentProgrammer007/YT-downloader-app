@@ -1,0 +1,16 @@
+<!-- <p>tabs works!</p-->
+
+    <div class="flex justify-center mb-8">
+    <div class="tonal-elevation-1 p-1 rounded-xl flex gap-1 items-center">
+        @for (tab of tabs(); track tab.id; let i = $index) {
+    
+        <button [routerLink] = "tab.link"
+            routerLinkActive="bg-primary-container text-on-primary-container"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [class]="(activeTab() === i ? activeClass : inactiveClass)" (click)="this.activeTab.set(i)"
+            [class.active]="activeTab() === i">
+            {{ tab.title }}
+        </button>
+        }  
+    </div>
+</div>

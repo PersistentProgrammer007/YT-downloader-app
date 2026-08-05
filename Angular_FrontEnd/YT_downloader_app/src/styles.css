@@ -4,116 +4,79 @@
 
 
 @theme {
-
-  /* Colors map to --color-* */
-  --color-tertiary: #69df70;
-  --color-outline-variant: #603e39;
-  --color-error: #ffb4ab;
-  --color-on-tertiary-container: #00320a;
-  --color-inverse-surface: #e5e2e1;
-  --color-background: #131313;
-  --color-primary: #ffb4a8;
-  --color-primary-fixed: #ffdad4;
-  --color-on-primary-fixed: #410000;
-  --color-on-primary-container: #5c0000;
-  --color-outline: #b18780;
-  --color-on-tertiary: #00390d;
-  --color-on-secondary-container: #002b4c;
-  --color-on-background: #e5e2e1;
-  --color-surface-container: #201f1f;
-  --color-tertiary-fixed-dim: #69df70;
-  --color-on-secondary-fixed: #001d35;
-  --color-tertiary-container: #2ba640;
-  --color-surface: #131313;
-  --color-on-primary: #690100;
-  --color-surface-container-high: #2a2a2a;
-  --color-secondary-container: #2295ed;
-  --color-on-surface-variant: #ebbbb4;
-  --color-on-error: #690005;
+  --color-surface-tint: #ffb3ae;
+  --color-on-tertiary-fixed-variant: #474746;
+  --color-on-surface-variant: #e4beba;
+  --color-on-secondary-fixed-variant: #474746;
   --color-surface-dim: #131313;
-  --color-on-tertiary-fixed-variant: #005316;
-  --color-surface-tint: #ffb4a8;
-  --color-secondary: #9ccaff;
-  --color-on-error-container: #ffdad6;
-  --color-primary-fixed-dim: #ffb4a8;
-  --color-secondary-fixed: #d0e4ff;
-  --color-primary-container: #ff5540;
-  --color-on-secondary-fixed-variant: #00497b;
-  --color-tertiary-fixed: #85fc89;
+  --color-on-tertiary: #303030;
+  --color-error: #ffb4ab;
+  --color-on-primary-fixed: #410004;
+  --color-on-error: #690005;
+  --color-inverse-surface: #e5e2e1;
+  --color-on-secondary-container: #b7b5b4;
+  --color-secondary: #c8c6c5;
+  --color-on-tertiary-fixed: #1b1c1c;
+  --color-outline: #ab8986;
   --color-error-container: #93000a;
-  --color-on-secondary: #003257;
-  --color-inverse-primary: #c00100;
-  --color-surface-container-low: #1c1b1b;
-  --color-on-tertiary-fixed: #002105;
-  --color-surface-bright: #3a3939;
-  --color-secondary-fixed-dim: #9ccaff;
-  --color-inverse-on-surface: #313030;
-  --color-on-surface: #e5e2e1;
-  --color-surface-container-highest: #353534;
-  --color-surface-container-lowest: #0e0e0e;
-  --color-on-primary-fixed-variant: #930100;
+  --color-primary: #ffb3ae;
+  --color-surface-container-high: #2a2a2a;
   --color-surface-variant: #353534;
+  --color-secondary-fixed: #e5e2e1;
+  --color-on-secondary: #313030;
+  --color-tertiary-fixed: #e4e2e1;
+  --color-surface-container-highest: #353534;
+  --color-on-tertiary-container: #2a2a2a;
+  --color-primary-fixed-dim: #ffb3ae;
+  --color-on-secondary-fixed: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-on-error-container: #ffdad6;
+  --color-surface: #131313;
+  --color-secondary-fixed-dim: #c8c6c5;
+  --color-on-background: #e5e2e1;
+  --color-inverse-primary: #ba1724;
+  --color-inverse-on-surface: #313030;
+  --color-background: #131313;
+  --color-surface-bright: #3a3939;
+  --color-on-primary-fixed-variant: #930014;
+  --color-on-primary: #68000b;
+  --color-tertiary-container: #929090;
+  --color-secondary-container: #474746;
+  --color-tertiary: #c8c6c5;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-primary-container: #ff5352;
+  --color-outline-variant: #5b403e;
+  --color-on-primary-container: #5c0008;
+  --color-tertiary-fixed-dim: #c8c6c5;
+  --color-primary-fixed: #ffdad7;
+  --color-on-surface: #e5e2e1;
+  --color-surface-container-low: #1c1b1b;
 
-  /* Border Radius maps to --radius-* */
-  --radius-DEFAULT: 0.25rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-full: 9999px;
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
 
-  /* Spacing maps to --spacing-* */
+  --spacing-base: 8px;
+  --spacing-margin-desktop: 40px;
+  --spacing-container-max: 1280px;
   --spacing-margin-mobile: 16px;
   --spacing-gutter: 24px;
-  --spacing-stack-gap: 16px;
-  --spacing-section-gap: 48px;
-  --spacing-container-max-width: 1120px;
-  --spacing-base: 8px;
 
-  /* Fonts map to --font-* */
-  --font-display-lg: "Hanken Grotesk";
-  --font-body-sm: "Inter";
-  --font-meta-data: "JetBrains Mono";
-  --font-headline-md: "Hanken Grotesk";
-  --font-label-caps: "Inter";
-  --font-body-base: "Inter";
-  --font-headline-md-mobile: "Hanken Grotesk";
+  --font-display: "Geist";
+  --font-headline-lg: "Geist";
+  --font-label-caps: "JetBrains Mono";
+  --font-body-md: "Hanken Grotesk";
+  --font-headline-lg-mobile: "Geist";
+  --font-body-sm: "Hanken Grotesk";
 
-    --text-display-lg: 48px;
-  --text-display-lg--line-height: 56px;
-  --text-display-lg--letter-spacing: -0.02em;
-  --text-display-lg--font-weight: 800;
-
-  /* body-sm */
-  --text-body-sm: 14px;
-  --text-body-sm--line-height: 20px;
-  --text-body-sm--font-weight: 400;
-
-  /* meta-data */
-  --text-meta-data: 12px;
-  --text-meta-data--line-height: 16px;
-  --text-meta-data--letter-spacing: 0.02em;
-  --text-meta-data--font-weight: 500;
-
-  /* headline-md */
-  --text-headline-md: 24px;
-  --text-headline-md--line-height: 32px;
-  --text-headline-md--font-weight: 600;
-
-  /* label-caps */
-  --text-label-caps: 12px;
-  --text-label-caps--line-height: 16px;
-  --text-label-caps--font-weight: 700;
-
-  /* body-base */
-  --text-body-base: 16px;
-  --text-body-base--line-height: 24px;
-  --text-body-base--font-weight: 400;
-
-  /* headline-md-mobile */
-  --text-headline-md-mobile: 20px;
-  --text-headline-md-mobile--line-height: 28px;
-  --text-headline-md-mobile--font-weight: 600;
-  
+  --text-display: 48px/56px "Geist";
+  --text-headline-lg: 32px/40px "Geist";
+  --text-label-caps: 12px/16px "JetBrains Mono";
+  --text-body-md: 16px/24px "Hanken Grotesk";
+  --text-body-sm: 14px/20px "Hanken Grotesk";
 }
+
 
 /* Your custom components now reference standard var() syntax for custom properties */
 @layer base {
@@ -131,5 +94,37 @@
     -webkit-backdrop-filter: blur(12px); 
     border: 1px solid var(--color-surface-container-highest); 
   }
+}
+
+body {
+        background-color: #131313;
+        color: #e5e2e1;
+}
+
+.tonal-surface-1 {
+        background-color: #1c1b1b;
+        border: 1px solid #353534;
+}
+
+.tonal-surface-2 {
+        background-color: #201f1f;
+        border: 1px solid #3a3939;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+        background: #131313;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #353534;
+        border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #474746;
 }
 

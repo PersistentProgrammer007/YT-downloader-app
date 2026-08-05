@@ -11,9 +11,9 @@ import { Footer } from "./common_components/footer/footer";
       <app-header></app-header>
 
       <router-outlet/>
-
+</main>
       <app-footer/>
-    </main>
+    
   `,
   // templateUrl: './app.html',
   styleUrl: './app.css'

@@ -1,0 +1,47 @@
+<!-- <p>list-item works!</p>
+  -->
+
+<div class="tonal-surface-1 rounded-xl p-4 flex flex-col md:flex-row gap-6 items-center group hover:bg-surface-container transition-colors">
+        <div
+                class="relative flex-shrink-0 w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-container-highest">
+                <img class="w-full h-full object-cover"
+                        data-alt="A cinematic high-quality thumbnail showing a futuristic cityscape at sunset with neon reflections on wet asphalt. The overall aesthetic is dark mode professional with vibrant blue and pink highlights, echoing a premium media tool interface. Soft bokeh lighting in the background creates depth."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDzxciMg0LuW-_ACQ50wvr3FIGas1UFX9UH7VHy-RlT98FmJ09g99Vl89ebS_PoNOtG6CXYqLCPt_TNUmgkQ8fgbJk7o35gwi-dqfnqhFiCX8pGeatgXX80YkIDh31rYsWu2kOjPDFwO3FK_BAH1oQpbeq4-QVJJ0aXU0m8ppWjbAa4kC8NIkORdBkOMy7CCQnpQQx2BHCU_Fxapgtkbvo_5-C666bHCPWlRx4teQ8w9NRTwGZPeI">
+                <div
+                        class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-label-caps font-label-caps text-white">
+                        {{ duration() }}</div>
+        </div>
+        <div class="flex-grow min-w-0">
+                <h3 class="text-body-md font-bold text-on-surface truncate mb-1">{{ title() }}</h3>
+                <div
+                        class="flex items-center gap-3 text-label-caps font-label-caps text-on-surface-variant">
+                        <span class="flex items-center gap-1"><span
+                                        class="material-symbols-outlined text-[14px]">person</span>
+                                {{ uploaderName() }}</span>
+                        <span class="flex items-center gap-1"><span
+                                        class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                {{ video_age() }}</span>
+                </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+    <!-- Changed width from sm:w-48 to sm:w-64 (256px) -->
+        <div class="relative w-full sm:w-55">
+            <select
+                class="w-full bg-surface-container-high border border-outline rounded-lg py-2 pl-3 pr-10 text-body-sm text-on-surface appearance-none focus:ring-1 focus:ring-primary outline-none truncate cursor-pointer">
+                <option>1080p (.mp4) - 245 MB</option>
+                <option>720p (.mp4) - 112 MB</option>
+                <option>480p (.mp4) - 64 MB</option>
+                <option>MP3 Audio - 12 MB</option>
+            </select>
+            <span
+                class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+        </div>
+        <button
+            class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-surface-container-highest border border-outline rounded-lg text-on-surface hover:bg-primary hover:text-on-primary transition-all font-label-caps cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">download</span>
+            Download
+        </button>
+</div>
+
+</div>
