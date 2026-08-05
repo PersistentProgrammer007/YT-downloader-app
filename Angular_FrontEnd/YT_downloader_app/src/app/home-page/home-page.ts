@@ -19,6 +19,10 @@ export class HomePage {
   fetchText = signal("Fetch");
   phText = signal("Paste Youtube video or short URL here");
 
+  videoMetadata = {id: 1 ,title: 'Modern UI Design Trends 2024 - Full Masterclass', uploaderName: 'Design Academy', video_age: '2 days ago', duration: '12:45',
+      formats: ['1080p(mp4) - 240mb', '720p(mp4) - 180mb'], thumbnailPath: ''
+    }
+
   // title = "its working, the home page!";
 
 
