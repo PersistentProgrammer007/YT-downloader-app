@@ -1,0 +1,5 @@
+exclusion option in each video item
+
+subtitle file 
+
+subtitle-info file (auto-captions or manual subtitles?)

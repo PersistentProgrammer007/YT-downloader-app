@@ -1,10 +1,13 @@
-import { Component ,signal} from '@angular/core';
+import { Component ,signal, inject, OnInit} from '@angular/core';
 import { Header } from "../common_components/header/header";
 import { TrialTab } from "../trial-tab/trial-tab";
 
 import { RouterLink , RouterLinkActive } from '@angular/router';
 import { Tabs } from "../common_components/tabs/tabs";
 import { Fetch } from "../common_components/fetch/fetch";
+
+import { YoutubeClient } from "../services/youtube-client"
+import { VideoDetails } from '../Models/VideoMetadata'
 
 @Component({
   selector: 'app-home-page',
@@ -13,15 +16,62 @@ import { Fetch } from "../common_components/fetch/fetch";
   styleUrl: './home-page.css',
   standalone: true
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
 
   fetchText = signal("Fetch");
   phText = signal("Paste Youtube video or short URL here");
 
-  videoMetadata = {id: 1 ,title: 'Modern UI Design Trends 2024 - Full Masterclass', uploaderName: 'Design Academy', video_age: '2 days ago', duration: '12:45',
-      formats: ['1080p(mp4) - 240mb', '720p(mp4) - 180mb'], thumbnailPath: ''
-    }
+  // videoMetadata = {id: 1 ,title: 'Modern UI Design Trends 2024 - Full Masterclass', uploaderName: 'Design Academy', video_age: '2 days ago', duration: '12:45',
+  //     formats: ['1080p(mp4) - 240mb', '720p(mp4) - 180mb'], thumbnailPath: ''
+  //   }
+
+  youtubeService = inject(YoutubeClient);
+
+  video = signal<Partial<VideoDetails>>({});
+
+ getVideoDetails(event : Event, url:string) : void {
+
+  event.preventDefault();
+
+    this.youtubeService.getVideoMetadata(url.trim())
+    .subscribe({
+    
+      next: (data) => {
+
+        let imagePath : string = "http://localhost:3000/thumbnails/" + data.thumbnailFileName;
+        data.thumbnailFileName = imagePath;
+
+        this.video.set(data)
+      },
+
+      error: (err) => {
+        console.log('API error: ' + err);
+      }
+
+    });
+
+ }
+  
+
+  ngOnInit(): void {
+
+    // console.log(this.youtubeService.data)
+
+    // // this.youtubeService.getVideoMetadata()
+    
+    // //AFTER api call
+
+    // let imagePath : string = "thumbnails/" + this.youtubeService.data.thumbnailFileName
+    // this.youtubeService.data.thumbnailFileName = imagePath;
+
+
+
+    // this.data.set(this.youtubeService.data);
+  }
+
+
+}
 
   // title = "its working, the home page!";
 
@@ -67,5 +117,3 @@ export class HomePage {
   //   else 
   //     return 'flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-gutter py-12';
   // }
-
-}

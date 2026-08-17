@@ -14,63 +14,90 @@
             </p>
 </section>
 
-<div class="max-w-3xl mx-auto space-y-4">
+<div class="max-w-5xl mx-auto space-y-4">
 <!-- Segmented Switcher -->
 
 <app-tabs></app-tabs>
 
-<app-fetch [fetchText]="fetchText()" [placeholderText]="phText()"></app-fetch>
+<!-- <app-fetch [fetchText]="fetchText()" [placeholderText]="phText()"></app-fetch> -->
+
+<div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-2">
+        <div class="relative flex-grow group">
+                <span
+                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
+                <input #urlInput
+                        class="w-full h-14 pl-12 pr-4 bg-surface-container border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-on-surface-variant/50 text-on-surface font-body-md"
+                        placeholder = "Paste Youtube video or short URL here"
+                        type="text">
+        </div>
+        <button
+                class="h-14 px-10 bg-primary-container hover:bg-opacity-90 text-on-primary-container font-headline-lg-mobile rounded-lg transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2"
+                (click)="getVideoDetails($event, urlInput.value)"
+                type = "button">
+                Fetch
+                <span class="material-symbols-outlined">search</span>
+                
+        </button>
+</div>
 
 <!-- Results Section (Bento Card Style) -->
 <div class="mt-12 opacity-100 transition-all duration-500 transform translate-y-0" id="result-card">
 <div class="tonal-elevation-1 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl">
 <!-- Thumbnail Container -->
 <div class="relative w-full md:w-2/5 aspect-video md:aspect-auto">
-<img class="w-full h-full object-cover" data-alt="A cinematic, high-definition cinematic still frame from a professional YouTube video set in a futuristic urban environment at dusk. The lighting is dominated by deep reds and electric blues, creating a high-contrast tech atmosphere. In the foreground, a sleek digital interface is partially visible, suggesting a high-performance software application. The background features blurred city lights in a minimalist, dark-themed aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0ljr2xlT1K5kMzoi3IiRWjU3RTbwcs6lOF-MpKOEoAssWX521yT5Zn49HzZZahMdutxmDBZdLkeKnf45NUUbJl2z5s7crLmbyRVr1QOL8SawoQ2kF5ZZ86mWyBwcZ6CSFk38ZS270bv4ifkCLhXwWvz5-T-hhd7Q33xmjfU6OEDt6dDMM4Dh45_oHl4tjEMrdBm5ueY68XGhLYkohfx3jqFNjhKfxaA69QkCdC6BaqexXeNUH7bs">
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-definition cinematic still frame from a professional YouTube video set in a futuristic urban environment at dusk. The lighting is dominated by deep reds and electric blues, creating a high-contrast tech atmosphere. In the foreground, a sleek digital interface is partially visible, suggesting a high-performance software application. The background features blurred city lights in a minimalist, dark-themed aesthetic." 
+[src]="video().thumbnailFileName">
 <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/80 rounded font-label-caps text-label-caps text-white">
-                            12:45
+                            {{ video().duration }}
                         </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
 <span class="material-symbols-outlined text-white text-5xl">play_circle</span>
 </div>
 </div>
+
+
 <!-- Content Details -->
 <div class="p-6 md:p-8 flex flex-col flex-grow">
 <div class="flex flex-col gap-2 mb-6">
-<span class="text-label-caps font-label-caps text-primary px-2 py-0.5 bg-primary/10 rounded w-fit">4K Ultra HD</span>
-<h2 class="text-headline-lg font-headline-lg text-on-surface leading-tight">Exploring the Future of Web Development with Dark Mode UI Design</h2>
-<div class="flex items-center gap-4 mt-2">
+<!-- <span class="text-label-caps font-label-caps text-primary px-2 py-0.5 bg-primary/10 rounded w-fit">4K Ultra HD</span> -->
+<h2 class="text-headline-lg font-headline-lg text-on-surface leading-tight">{{ video().title }}</h2>
+<div class="flex flex-wrap items-center gap-4 mt-2">
 <div class="flex items-center gap-2">
 <div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center">
 <span class="material-symbols-outlined text-sm">person</span>
 </div>
-<span class="font-body-sm text-body-sm text-on-surface font-medium">TechNova Collective</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">{{ video().uploader }}</span>
 </div>
 <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Oct 24, 2023</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">{{video().uploadDate}}</span>
 <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">1 year ago</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">{{ video().videoAge }}</span>
 </div>
 </div>
 <div class="mt-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
 <!-- Quality Dropdown -->
 <div class="space-y-1">
 <label class="text-label-caps font-label-caps text-on-surface-variant ml-1">Select Quality</label>
 <div class="relative group">
 <select class="appearance-none w-full h-12 bg-surface-container-high border border-outline-variant rounded-lg px-4 pr-10 text-on-surface font-label-caps text-label-caps outline-none focus:ring-1 focus:ring-primary transition-all cursor-pointer">
-<option>2160p (4K) - 1.2 GB</option>
-<option selected="">1080p (FHD) - 640 MB</option>
-<option>720p (HD) - 320 MB</option>
-<option>480p - 180 MB</option>
-<option>360p - 120 MB</option>
+
+@for (format of video().formats; track $index){
+    <option> {{ format }}</option>
+}
+
 </select>
 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
 </div>
 </div>
+
+
+
 <!-- Download Button -->
 <div class="flex items-end">
 <button class="w-full h-12 bg-primary-container hover:bg-opacity-90 text-on-primary-container font-headline-lg-mobile font-bold rounded-lg transition-all active:scale-95 flex items-center justify-center gap-3">
-                                    Download now!
+                                    Download
                                     <span class="material-symbols-outlined">file_download</span>
 </button>
 </div>
@@ -78,6 +105,10 @@
 </div>
 </div>
 </div>
+
+
+
+
 <!-- Features Grid (Supplementary context) -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-12">
 <div class="tonal-elevation-1 p-6 rounded-xl space-y-3">

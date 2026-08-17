@@ -6,11 +6,27 @@ import youtubedl from 'youtube-dl-exec';
 import fs from 'fs/promises';
 import path from 'path';
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+
 const app = express();
 
 app.use(express.json());
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')))
+
 // cors setup is remaining: 
+
+app.use(cors({
+    origin: ['http://localhost:4200', 'http://127.0.0.1:4200']
+}))
+
+
 
 app.get('/', (_, res) => {
 
@@ -22,13 +38,37 @@ app.get('/', (_, res) => {
 // video webpage endpoints: 
 
 // Ensure a directory exists for saving thumbnails
-const THUMBNAIL_DIR = path.join("H:/College and programming related/MSCIT/Sem 3/Project/YT download app/Angular_FrontEnd/YT_downloader_app/src/app", 'thumbnails');
+const THUMBNAIL_DIR = path.join("H:/College and programming related/MSCIT/Sem 3/Project/YT download app/Express_Backend", 'thumbnails');
 fs.mkdir(THUMBNAIL_DIR, { recursive: true }).catch(console.error);
+
+/**
+ 
+helper 
+ 
+ */
+
+function formatDuration(totalSeconds) {
+    if (!totalSeconds) return '0:00';
+    
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = Math.floor(totalSeconds % 60);
+
+    const paddedSecs = secs.toString().padStart(2, '0');
+
+    if (hrs > 0) {
+        const paddedMins = mins.toString().padStart(2, '0');
+        return `${hrs}:${paddedMins}:${paddedSecs}`; // e.g. "1:05:23"
+    }
+    
+    return `${mins}:${paddedSecs}`; // e.g. "12:45"
+}
 
 /**
  * Helper: Downloads the thumbnail image and returns the saved filename.
  */
 async function downloadThumbnail(thumbnailUrl, videoId) {
+
     const response = await fetch(thumbnailUrl);
     if (!response.ok) {
         throw new Error(`Failed to fetch thumbnail: ${response.statusText}`);
@@ -46,7 +86,7 @@ async function downloadThumbnail(thumbnailUrl, videoId) {
     const fileName = `${videoId || Date.now()}_thumbnail${ext}`;
     const filePath = path.join(THUMBNAIL_DIR, fileName);
 
-    console.log("filePath is: " + filePath);
+    // console.log("filePath is: " + filePath);
 
     await fs.writeFile(filePath, buffer);
     return fileName;
@@ -133,9 +173,12 @@ function getTop4VideoFormats(formats = [], duration) {
 }
 
 app.post('/video/get-metadata', async (req, res) => {
-    const { url } = req.body;
 
-    console.log("in here");
+    // console.log("endpoint running!");
+
+    const url  = req.body.url;
+
+    // console.log("in here, url is : " + url);
 
     if (!url) {
         return res.status(400).json({ error: 'URL is required' });
@@ -154,22 +197,29 @@ app.post('/video/get-metadata', async (req, res) => {
             thumbnailFileName = await downloadThumbnail(output.thumbnail, output.id);
         }
 
-        // 2. Format upload date (YYYYMMDD -> YYYY-MM-DD)
+        // 2. Format upload date (YYYYMMDD -> DD-MM-YY)
         const rawDate = output.upload_date || '';
         const formattedDate = rawDate.length === 8 
-            ? `${rawDate.slice(0, 4)}-${rawDate.slice(4, 6)}-${rawDate.slice(6, 8)}` 
+            ? `${rawDate.slice(6, 8)}-${rawDate.slice(4, 6)}-${rawDate.slice(2, 4)}`
             : rawDate;
+
+        console.log(formattedDate);
+
 
         // 3. Get top 4 best video formats formatted as strings
         const top4Formats = getTop4VideoFormats(output.formats, output.duration);
+
+        const totalSeconds = output.duration || 0;
+        const formattedDuration = formatDuration(totalSeconds);
 
         res.json({
             title: output.title || 'Unknown Title',
             uploader: output.uploader || output.channel || 'Unknown Uploader',
             uploadDate: formattedDate,
-            videoAge: calculateVideoAge(rawDate),
+            videoAge: calculateVideoAge(rawDate) + " Ago",
             thumbnailFileName: thumbnailFileName,
-            formats: top4Formats
+            formats: top4Formats,
+            duration: formattedDuration
         });
     } catch (error) {
         res.status(500).json({
@@ -220,8 +270,6 @@ app.post('/playlist/download-all', (reqURL, res) => {
 })
 
 // music webpage endpoints:
-
-
 
 app.listen(3000, () => {
     console.log("server is up and running!");
