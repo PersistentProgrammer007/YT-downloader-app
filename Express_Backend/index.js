@@ -9,24 +9,31 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+import downloadRouter from './download.js'
 
 const app = express();
 
 app.use(express.json());
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')))
-
-// cors setup is remaining: 
+// app.use(cors({
+//     origin: '*',
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['Content-Type']
+// }));
 
 app.use(cors({
     origin: ['http://localhost:4200', 'http://127.0.0.1:4200']
 }))
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')));
+
+app.use('/download', downloadRouter);
+
+// cors setup is remaining: 
 
 app.get('/', (_, res) => {
 
@@ -147,34 +154,56 @@ function formatSize(format, duration) {
 /**
  * Helper: Extracts the top 4 unique video resolutions sorted highest to lowest.
  */
-function getTop4VideoFormats(formats = [], duration) {
-    const resolutionMap = new Map();
 
-    for (const f of formats) {
-        // Only include video streams with a valid height
-        if (!f.height || f.vcodec === 'none') continue;
+function getTop4VideoFormats(formats) {
+    // 1. Find the largest audio-only track to estimate the audio size
+    const audioTracks = formats.filter(f => f.vcodec === 'none' && f.acodec !== 'none');
+    const bestAudioSize = audioTracks.reduce((max, f) => {
+        const size = f.filesize || f.filesize_approx || 0;
+        return size > max ? size : max;
+    }, 0);
 
-        // If we haven't stored this height yet, or if this format prefers .mp4 / has a larger size
-        const existing = resolutionMap.get(f.height);
-        if (!existing || (f.ext === 'mp4' && existing.ext !== 'mp4')) {
-            resolutionMap.set(f.height, f);
+    // 2. Filter for tracks that actually contain video and have a valid height
+    const videoFormats = formats.filter(f => f.vcodec !== 'none' && f.vcodec != null && f.height);
+
+    // 3. Deduplicate by resolution (keep only the best quality version of each resolution)
+    const uniqueResolutions = {};
+    for (const f of videoFormats) {
+        const height = f.height;
+        const size = f.filesize || f.filesize_approx || 0;
+        
+        // If the video track lacks audio, add the best audio size to it
+        const hasAudio = f.acodec !== 'none' && f.acodec != null;
+        const totalSizeBytes = hasAudio ? size : size + bestAudioSize;
+        
+        // Skip formats where we have absolutely no size data
+        if (totalSizeBytes === 0) continue;
+
+        // Keep the version with the highest size/bitrate for this resolution
+        if (!uniqueResolutions[height] || totalSizeBytes > uniqueResolutions[height].totalSizeBytes) {
+            uniqueResolutions[height] = {
+                resolution: `${height}p`,
+                ext: f.ext === 'webm' ? 'mp4' : f.ext, // Browsers often merge webm/mp4 DASH into MP4
+                totalSizeBytes: totalSizeBytes
+            };
         }
     }
 
-    // Sort descending by height (e.g., 1080 -> 720 -> 480 -> 360 -> 240)
-    const sortedHeights = Array.from(resolutionMap.keys()).sort((a, b) => b - a);
+    // 4. Sort by resolution descending (1080p, 720p, 480p, etc.) and grab the top 4
+    const sortedFormats = Object.values(uniqueResolutions)
+        .sort((a, b) => parseInt(b.resolution) - parseInt(a.resolution))
+        .slice(0, 4);
 
-    // Pick top 4 and format the output strings
-    return sortedHeights.slice(0, 4).map(height => {
-        const f = resolutionMap.get(height);
-        const sizeStr = formatSize(f, duration);
-        return `${height}p (.${f.ext}) ~ ${sizeStr}`;
+    // 5. Format them into readable strings (e.g., "1080p - MP4 - 26.50 MB")
+    return sortedFormats.map(f => {
+        const sizeMb = (f.totalSizeBytes / (1024 * 1024)).toFixed(2);
+        return `${f.resolution} - ${f.ext.toUpperCase()}`;
     });
 }
 
 app.post('/video/get-metadata', async (req, res) => {
 
-    // console.log("endpoint running!");
+    console.log("endpoint running!");
 
     const url  = req.body.url;
 
@@ -185,6 +214,7 @@ app.post('/video/get-metadata', async (req, res) => {
     }
 
     try {
+        
         const output = await youtubedl(url, {
             dumpSingleJson: true,
             noWarnings: true,
@@ -203,11 +233,13 @@ app.post('/video/get-metadata', async (req, res) => {
             ? `${rawDate.slice(6, 8)}-${rawDate.slice(4, 6)}-${rawDate.slice(2, 4)}`
             : rawDate;
 
-        console.log(formattedDate);
+        // console.log(formattedDate);
 
 
-        // 3. Get top 4 best video formats formatted as strings
-        const top4Formats = getTop4VideoFormats(output.formats, output.duration);
+        // 3. Get top 4 best video formats formatted as strings        
+        const top4Formats = getTop4VideoFormats(output.formats);
+        console.log("adjusted formats: ", top4Formats);
+        
 
         const totalSeconds = output.duration || 0;
         const formattedDuration = formatDuration(totalSeconds);
@@ -221,6 +253,7 @@ app.post('/video/get-metadata', async (req, res) => {
             formats: top4Formats,
             duration: formattedDuration
         });
+
     } catch (error) {
         res.status(500).json({
             error: 'Failed to fetch video details',
@@ -261,8 +294,92 @@ app.post('/video/download', (reqURL, res) =>{
     // downloaded video's path + 
 })
 
-app.post('/playlist/get-metadata', (reqURL, res) => {
-    // should return a list of metadata fields listed above for all videos.
+app.post('/playlist/get-metadata', async (req, res) => {
+
+    console.log("hello from playlist metadata");
+
+    const url = req.body.url;   // playlist link!
+
+    if (!url) {
+        return res.status(400).json({ error: 'Playlist URL is required' });
+    }
+
+    try {
+        const output = await youtubedl(url, {
+            dumpSingleJson: true, // Returns the entire playlist as one JSON object
+            flatPlaylist: true,   // FAST EXTRACT: Gets just titles/URLs/durations, skips heavy video format extraction
+            noWarnings: true
+        });
+
+        // 'output' now represents the Playlist object
+        // 'output.entries' contains an array of the videos in the playlist
+
+        
+        const playlistTitle = output.title || 'Unknown Playlist';
+        const channelName = output.channel || output.uploader || 'Unknown Channel';
+        const totalVideos = output.entries ? output.entries.length : 0;
+
+        console.log("total videos: " + totalVideos);
+
+        // Map through the entries to format the video list
+        // const videoDetails = await Promise.all(
+        //     (output.entries || []).map(async (video, index) => {
+
+        // let thumbnailFileName = null;
+        // if (video.thumbnail) {
+        //     thumbnailFileName = await downloadThumbnail(video.thumbnail, video.id);
+        // }
+        
+        //     return {
+        //         index: index + 1,
+        //         title: video.title,
+        //         uploader: video.uploader || channelName,
+    
+        //         thumbnailFileName: thumbnailFileName,
+        //         url: video.url,
+        //         duration: formatDuration(video.duration || 0), 
+        //     };
+        // })
+        // );
+
+        const videoDetails = (output.entries || []).map((video, index) => {
+            const rawDate = video.upload_date;
+            const videoAgeString = rawDate ? calculateVideoAge(rawDate) + " Ago" : "Date unknown";
+
+            // yt-dlp flat-playlists often put thumbnails in an array. 
+            // Grab the last one in the array (usually the highest resolution), or fallback to the single string.
+            let thumbnailUrl = null;
+            if (video.thumbnails && video.thumbnails.length > 0) {
+                thumbnailUrl = video.thumbnails[video.thumbnails.length - 1].url;
+            } else if (video.thumbnail) {
+                thumbnailUrl = video.thumbnail;
+            }
+
+            return {
+                index: index + 1,
+                title: video.title,
+                uploader: video.uploader || channelName,
+
+                // Send the URL directly! No more 'await downloadThumbnail()'
+                thumbnailUrl: thumbnailUrl, 
+                url: video.url,
+                duration: formatDuration(video.duration || 0)
+            };
+        });
+
+        res.json({
+            p_title: playlistTitle,
+            channel: channelName,
+            totalVideos: totalVideos,
+            videos: videoDetails
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            error: 'Failed to fetch playlist details',
+            details: error.message
+        });
+    }
 })
 
 app.post('/playlist/download-all', (reqURL, res) => {
